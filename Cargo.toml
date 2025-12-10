@@ -1,0 +1,36 @@
+[package]
+name = "opentelemetry-instrumentation-process"
+version = "0.1.0"
+edition = "2024"
+authors = ["Quentin Gliech <quentingliech@gmail.com>"]
+license = "Apache-2.0"
+description = "OpenTelemetry instrumentation for process metrics"
+repository = "https://github.com/sandhose/opentelemetry-instrumentation-process"
+homepage = "https://github.com/sandhose/opentelemetry-instrumentation-process"
+keywords = [
+    "opentelemetry",
+    "metrics",
+    "observability",
+    "telemetry",
+]
+categories = ["development-tools::debugging", "development-tools::profiling"]
+
+[dependencies]
+
+[dependencies.opentelemetry]
+version = "0.31.0"
+default-features = false
+features = ["metrics"]
+
+[dependencies.opentelemetry-semantic-conventions]
+version = "0.31.0"
+features = ["semconv_experimental"]
+
+[target.'cfg(target_os = "linux")'.dependencies.procfs]
+version = "0.18.0"
+default-features = false
+
+[features]
+internal-logs = ["opentelemetry/internal-logs"]
+
+default = ["internal-logs"]

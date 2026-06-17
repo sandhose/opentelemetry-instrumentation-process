@@ -18,12 +18,12 @@ categories = ["development-tools::debugging", "development-tools::profiling"]
 [dependencies]
 
 [dependencies.opentelemetry]
-version = "0.31.0"
+version = "0.32.0"
 default-features = false
 features = ["metrics"]
 
 [dependencies.opentelemetry-semantic-conventions]
-version = "0.31.0"
+version = "0.32.0"
 features = ["semconv_experimental"]
 
 [target.'cfg(target_os = "linux")'.dependencies.procfs]

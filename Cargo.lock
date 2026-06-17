@@ -76,7 +76,7 @@ dependencies = [
 
 [[package]]
 name = "opentelemetry-instrumentation-process"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
  "opentelemetry",
  "opentelemetry-semantic-conventions",

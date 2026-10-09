@@ -6,7 +6,7 @@ use opentelemetry_semantic_conventions::attribute::{
 };
 use opentelemetry_semantic_conventions::metric::{
     PROCESS_CONTEXT_SWITCHES, PROCESS_CPU_TIME, PROCESS_DISK_IO, PROCESS_MEMORY_USAGE,
-    PROCESS_MEMORY_VIRTUAL, PROCESS_OPEN_FILE_DESCRIPTOR_COUNT, PROCESS_THREAD_COUNT,
+    PROCESS_MEMORY_VIRTUAL, PROCESS_THREAD_COUNT, PROCESS_UNIX_FILE_DESCRIPTOR_COUNT,
 };
 use procfs::process::Process;
 use procfs::{WithCurrentSystemInfo, ticks_per_second};
@@ -112,7 +112,7 @@ pub(crate) fn init() -> Result<(), Box<dyn std::error::Error + Send + Sync + 'st
     {
         let me = Arc::clone(&me);
         METER
-            .u64_observable_gauge(PROCESS_OPEN_FILE_DESCRIPTOR_COUNT)
+            .u64_observable_gauge(PROCESS_UNIX_FILE_DESCRIPTOR_COUNT)
             .with_unit("{file_descriptor}")
             .with_description("Number of file descriptors in use by the process.")
             .with_callback(move |instrument| {

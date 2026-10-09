@@ -6,7 +6,7 @@ use opentelemetry_semantic_conventions::attribute::{
 };
 use opentelemetry_semantic_conventions::metric::{
     PROCESS_CONTEXT_SWITCHES, PROCESS_CPU_TIME, PROCESS_DISK_IO, PROCESS_MEMORY_USAGE,
-    PROCESS_MEMORY_VIRTUAL, PROCESS_THREAD_COUNT,
+    PROCESS_MEMORY_VIRTUAL, PROCESS_THREAD_COUNT, PROCESS_UNIX_FILE_DESCRIPTOR_COUNT,
 };
 use procfs::process::Process;
 use procfs::{WithCurrentSystemInfo, ticks_per_second};
@@ -111,13 +111,8 @@ pub(crate) fn init() -> Result<(), Box<dyn std::error::Error + Send + Sync + 'st
 
     {
         let me = Arc::clone(&me);
-        // Semantic conventions renamed this metric to
-        // `process.unix.file_descriptor.count`; the old name is kept so
-        // existing dashboards keep working.
-        #[allow(deprecated, reason = "renaming the metric is a breaking change")]
-        let name = opentelemetry_semantic_conventions::metric::PROCESS_OPEN_FILE_DESCRIPTOR_COUNT;
         METER
-            .u64_observable_gauge(name)
+            .u64_observable_gauge(PROCESS_UNIX_FILE_DESCRIPTOR_COUNT)
             .with_unit("{file_descriptor}")
             .with_description("Number of file descriptors in use by the process.")
             .with_callback(move |instrument| {
